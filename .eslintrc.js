@@ -8,11 +8,12 @@ module.exports = {
     "airbnb-base",
     "plugin:prettier/recommended",
   ],
+  overrides: [],
   parserOptions: {
-    ecmaVersion: 12,
+    ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["vue"],
+  plugins: ["vue", "prettier"],
   rules: {
     "no-use-before-define": [
       "error",
@@ -27,7 +28,7 @@ module.exports = {
       "error",
       {
         endOfLine: "auto",
-        // singleQuote: true,
+        // singleQuote: false,
       },
     ],
   },
