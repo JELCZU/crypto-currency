@@ -30,6 +30,7 @@
 }
 .btns {
   display: flex;
+  gap: 16px;
 }
 #search {
   padding: 0px 42px;
@@ -52,7 +53,7 @@ button {
   color: #9896a1;
 }
 button:hover {
+  background-color: #ebebf3;
   cursor: pointer;
-  stroke: red;
 }
 </style>
