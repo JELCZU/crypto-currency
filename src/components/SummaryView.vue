@@ -1,5 +1,5 @@
 <template>
-  <div class="container">This is header</div>
+  <div class="container">This is Summary view</div>
 </template>
 
 <script></script>
