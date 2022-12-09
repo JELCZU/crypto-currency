@@ -30,11 +30,10 @@ export default {
   margin-top: 32px;
 }
 .container > div {
-  flex: 1;
+  width: 100%;
   /* flex: 2; */
 }
 .detail-view {
-  width: 100%;
   /* flex: 1 0 100%; */
 }
 /* .current-balance .summary-view {

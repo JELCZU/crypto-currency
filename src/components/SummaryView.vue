@@ -12,6 +12,7 @@
       </div>
       <canvas id="myChart"></canvas>
     </div>
+    <!-- <div class="border"></div> -->
   </div>
 </template>
 
@@ -39,6 +40,7 @@ export default {
         datasets: [
           {
             label: "This month",
+
             data: [43, 19, 3, 5, 23, 3],
             backgroundColor: gradient,
             borderColor: "#7445FB",
@@ -92,7 +94,7 @@ export default {
             labels: {
               usePointStyle: true,
               pointStyle: "circle",
-
+              padding: 44,
               boxHeight: 4,
               color: "#9896A1",
               font: { family: "SF Pro Display", size: 12, weight: 400 },
@@ -112,12 +114,22 @@ export default {
 .box {
   background-color: #f7f7f9;
   border-radius: 16px;
+
   /* padding: 32px; */
 }
 .inner-box {
   /* background-color: #f7f7f9;
   border-radius: 16px; */
   padding: 32px;
+  padding-bottom: 8px;
+}
+.border {
+  width: 100%;
+  border-style: solid;
+  border-width: 1px 0 0 0px;
+  border-color: red;
+  position: relative;
+  top: -42px;
 }
 .box-heading {
   display: flex;
