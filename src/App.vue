@@ -26,4 +26,9 @@ export default {
 .container {
   margin: 0 68px;
 }
+@media (max-width: 576px) {
+  .container {
+    margin: 0 20px;
+  }
+}
 </style>

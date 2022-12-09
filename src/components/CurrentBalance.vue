@@ -10,8 +10,15 @@
       </button>
     </div>
 
-    <div>{{ CurrentBalance }}</div>
-    <div>{{ change }}% vs last month</div>
+    <div class="cash">
+      <H1 id="currency">$</H1
+      ><H1 id="currency-value">99999999.99{{ CurrentBalance }}</H1>
+    </div>
+    <div class="diference-status">
+      <img src="../assets/img/market-growth-big.svg" alt="" />{{ change
+      }}<H2>% vs last month</H2>
+    </div>
+
     <div class="btns">
       <button id="quick-invest">Quick Invest</button>
       <button id="show-report">Show Report</button>
@@ -24,8 +31,9 @@ export default {
   name: "CurrentBalance",
   props: ["change", "CurrentBalance"],
   methods: {
-    changeMethod() {
-      return this.change;
+    diferenceSymbolPath() {
+      const path = "../assets/img/market-growth-big.svg";
+      return path;
     },
   },
 };
@@ -44,12 +52,35 @@ export default {
   justify-content: space-between;
 }
 .box-heading button {
-  height: 48px;
-  width: 48px;
+  height: auto;
+  width: auto;
   padding: 0;
 }
-H2 {
+.diference-status {
+  color: #2dc78f;
+  display: flex;
+  padding-bottom: 72px;
+}
+.cash {
+  margin: 40px 0 16px 0px;
+  padding: 0;
+}
+#currency {
+  color: #9896a1;
+}
+H1 {
   margin: 0;
+  padding: 0;
+  font-weight: 300;
+  font-size: 56px;
+  display: inline-block;
+}
+
+H2 {
+  padding: 0;
+  margin: 0;
+  font-weight: 500;
+  font-size: 24px;
 }
 button {
   height: 48px;
@@ -59,7 +90,7 @@ button {
   border-radius: 8px;
   border-style: none;
   color: #9896a1;
-  font-weight: normal;
+  font-weight: 600;
   font-size: 14px;
   width: auto;
   padding: 8px 16px;
@@ -79,14 +110,40 @@ button:hover {
 }
 .btns {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 #show-report {
-  border-color: EBEBF3;
+  border-color: #ebebf3;
   background-color: white;
   color: #7445fb;
+  border-style: solid;
 }
-button:hover {
+#show-report:hover {
   background-color: #ebebf3;
+}
+
+.box-heading button:hover {
+  background-color: #ebebf3;
+}
+@media (max-width: 576px) {
+  H1 {
+    margin: 0;
+    padding: 0;
+    font-weight: 300;
+    font-size: 36px;
+    display: inline-block;
+  }
+
+  H2 {
+    padding: 0;
+    margin: 0;
+    font-weight: 500;
+    font-size: 22px;
+  }
+  #quick-invest,
+  #show-report {
+    flex-grow: 1;
+  }
 }
 </style>
