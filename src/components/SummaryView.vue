@@ -62,6 +62,7 @@ export default {
       },
 
       options: {
+        maintainAspectRatio: true,
         scales: {
           y: {
             beginAtZero: true,

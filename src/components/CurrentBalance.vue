@@ -12,11 +12,11 @@
 
     <div class="cash">
       <H1 id="currency">$</H1
-      ><H1 id="currency-value">99999999.99{{ CurrentBalance }}</H1>
+      ><H1 id="currency-value">{{ numberWithSpaces(this.CurrentBalance) }}</H1>
     </div>
     <div class="diference-status">
-      <img src="../assets/img/market-growth-big.svg" alt="" />{{ change
-      }}<H2>% vs last month</H2>
+      <img :src="this.setSymbol(change)" alt="" />
+      <H2 id="balance-change">{{ change }}% vs last month</H2>
     </div>
 
     <div class="btns">
@@ -29,12 +29,48 @@
 <script>
 export default {
   name: "CurrentBalance",
-  props: ["change", "CurrentBalance"],
+  props: [],
+  data() {
+    return {
+      CurrentBalance: 21432.23,
+      change: 12,
+    };
+  },
   methods: {
-    diferenceSymbolPath() {
-      const path = "../assets/img/market-growth-big.svg";
+    numberWithSpaces(x) {
+      const parts = x.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      return parts.join(".");
+    },
+
+    setSymbol(change) {
+      // eslint-disable-next-line global-require, import/no-unresolved
+      let path = require("@/./assets/img/market-no-change-md.svg");
+      if (change > 0) {
+        // eslint-disable-next-line global-require, import/no-unresolved
+        path = require("@/./assets/img/market-growth-md.svg");
+      }
+      if (change < 0) {
+        // eslint-disable-next-line global-require, import/no-unresolved
+        path = require("@/./assets/img/market-fall-md.svg");
+      }
       return path;
     },
+    setTextColor(change) {
+      document.getElementById("balance-change").classList.remove("profit");
+      document.getElementById("balance-change").classList.remove("lose");
+      if (change > 0) {
+        document.getElementById("balance-change").classList.remove("lose");
+        document.getElementById("balance-change").classList.add("profit");
+      }
+      if (change < 0) {
+        document.getElementById("balance-change").classList.remove("profit");
+        document.getElementById("balance-change").classList.add("lose");
+      }
+    },
+  },
+  mounted() {
+    this.setTextColor(this.change);
   },
 };
 </script>
@@ -57,9 +93,15 @@ export default {
   padding: 0;
 }
 .diference-status {
-  color: #2dc78f;
+  color: #9896a1;
   display: flex;
   padding-bottom: 72px;
+}
+.profit {
+  color: #2dc78f;
+}
+.lose {
+  color: #ea4d4d;
 }
 .cash {
   margin: 40px 0 16px 0px;
@@ -107,6 +149,9 @@ button:hover {
   border-style: none;
   background-color: #7445fb;
   color: #ffffff;
+}
+.diference-status H2 {
+  padding-left: 5px;
 }
 .btns {
   display: flex;

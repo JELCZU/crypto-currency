@@ -29,6 +29,13 @@ export default {
   gap: 32px;
   margin-top: 32px;
 }
+.current-balance {
+  /* height: 336px; */
+}
+
+.summary-view {
+  /* height: 336px; */
+}
 .container > div {
   width: 100%;
   /* flex: 2; */

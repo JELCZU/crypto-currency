@@ -26,9 +26,7 @@ import Analysis from "./DetailViewTabs/TabAnalysis.vue";
 export default {
   data() {
     return {
-      // tabs: ["Home", "Contact"],
       tabs: ["Summary", "Table", "Charts", "Reporting", "Analysis"],
-      // selected: "Home",
       selected: "Summary",
     };
   },
