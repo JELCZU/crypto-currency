@@ -37,7 +37,12 @@
             +
           </div>
         </div>
-        <div>{{ this.cryptoCurrency.quote.USD.percent_change_30d }}%</div>
+        <div>
+          {{
+            Math.round(this.cryptoCurrency.quote.USD.percent_change_30d * 100) /
+            (100).toFixed(2)
+          }}%
+        </div>
         <img
           :src="
             this.setGraphic(this.cryptoCurrency.quote.USD.percent_change_30d)
@@ -47,7 +52,7 @@
       </div>
     </div>
     <div class="currency-trend">
-      <canvas id="myChart1"></canvas>
+      <canvas :id="this.cryptoCurrency.id"></canvas>
     </div>
     <div class="currency-btns">
       <button id="sell">Sell</button><button id="buy">Buy</button>
@@ -64,14 +69,19 @@ export default {
   data() {
     return {
       change: 0,
-      color: "rgba(45, 199, 143, 1)",
-      colorBackground: "rgba(45, 199, 143, 0.04)",
-      // colorBackground: "red",
+      borderColor: "",
+      trendConfig: {
+        borderColor: { rise: "rgba(45, 199, 143, 1)", fall: "#ea4d4d" },
+        backgroundColor: {
+          rise: "rgba(45, 199, 143, 0.04)",
+          fall: "rgb(234,77,77,0.04)",
+        },
+      },
     };
   },
   methods: {
     diferenceSymbolPath() {
-      const path = "../assets/img/market-growth-big.svg";
+      const path = "../assets/img/market-growth-sm.svg";
       return path;
     },
     setSymbol() {},
@@ -89,9 +99,16 @@ export default {
       return path;
     },
     renderChart() {
-      const ctx = document.getElementById("myChart1");
+      const ctx = document.getElementById(this.cryptoCurrency.id);
       const gradient = ctx.getContext("2d").createLinearGradient(0, 0, 0, 200);
-      gradient.addColorStop(0, this.colorBackground);
+      if (this.cryptoCurrency.quote.USD.percent_change_30d < 0) {
+        gradient.addColorStop(0, this.trendConfig.backgroundColor.fall);
+        this.borderColor = this.trendConfig.borderColor.fall;
+      } else {
+        gradient.addColorStop(0, this.trendConfig.backgroundColor.rise);
+        this.borderColor = this.trendConfig.borderColor.rise;
+      }
+
       gradient.addColorStop(1, "rgba(254,254,254,0)");
       const summaryChart = new Chart(ctx, {
         type: "line",
@@ -103,7 +120,7 @@ export default {
 
               data: [43, 19, 3, 5, 23, 3],
               backgroundColor: gradient,
-              borderColor: this.color,
+              borderColor: this.borderColor,
               fill: true,
               tension: 0.4,
               borderWidth: 2,
@@ -119,6 +136,7 @@ export default {
               bottom: false,
             },
           },
+
           maintainAspectRatio: false,
           scales: {
             y: {
@@ -167,7 +185,9 @@ export default {
       summaryChart;
     },
   },
-  mounted() {},
+  mounted() {
+    this.renderChart();
+  },
 };
 </script>
 
@@ -178,6 +198,7 @@ export default {
   border-color: #ebebf3;
   border-width: 1px;
   height: 80px;
+  width: 100%;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
@@ -254,5 +275,46 @@ canvas {
 }
 .fall {
   color: #ea4d4d;
+}
+@media (max-width: 576px), (max-height: 576px) {
+  .li {
+    background-color: white;
+    padding: 5px 5px;
+    border-color: #ebebf3;
+    gap: 5px;
+    border-width: 1px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: max-content;
+    width: 100%;
+    border-radius: 8px;
+    display: flex;
+    /* justify-content: center; */
+    /* align-content: center; */
+    font-size: 14px;
+  }
+  .currency-general,
+  .currency-price,
+  .currency-change {
+    width: auto;
+  }
+  .currency-btns {
+    display: flex;
+    gap: 40px;
+  }
+  H1 {
+    font-weight: 300;
+    font-size: 28px;
+    display: inline-block;
+    margin: 40px 0 16px 0px;
+    padding: 0;
+  }
+
+  H2 {
+    padding: 0;
+    margin: 0;
+    font-weight: 500;
+    font-size: 22px;
+  }
 }
 </style>

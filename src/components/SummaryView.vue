@@ -10,7 +10,7 @@
           />
         </button>
       </div>
-      <canvas id="myChart"></canvas>
+      <div class="canvas-border"><canvas id="myChart"></canvas></div>
     </div>
     <!-- <div class="border"></div> -->
   </div>
@@ -62,6 +62,7 @@ export default {
       },
 
       options: {
+        responsive: true,
         maintainAspectRatio: true,
         scales: {
           y: {
@@ -112,38 +113,6 @@ export default {
 </script>
 
 <style scoped>
-.box {
-  background-color: #f7f7f9;
-  border-radius: 16px;
-
-  /* padding: 32px; */
-}
-.inner-box {
-  /* background-color: #f7f7f9;
-  border-radius: 16px; */
-  padding: 32px;
-  padding-bottom: 8px;
-}
-.border {
-  width: 100%;
-  border-style: solid;
-  border-width: 1px 0 0 0px;
-  border-color: red;
-  position: relative;
-  top: -42px;
-}
-.box-heading {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 30px;
-}
-.box-heading button {
-  height: auto;
-  width: auto;
-  padding: 0;
-}
 H1 {
   margin: 0;
   padding: 0;
@@ -158,6 +127,33 @@ H2 {
   font-weight: 500;
   font-size: 24px;
 }
+.box {
+  background-color: #f7f7f9;
+  border-radius: 16px;
+}
+.inner-box {
+  padding: 32px;
+  padding-bottom: 8px;
+}
+.box-heading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 30px;
+}
+.box-heading button {
+  height: auto;
+  width: auto;
+  padding: 0;
+}
+button:hover {
+  cursor: pointer;
+  background-color: #ebebf3;
+}
+.canvas-border {
+  height: 400px;
+}
 button {
   height: 48px;
   width: 48px;
@@ -171,10 +167,23 @@ button {
   width: auto;
   padding: 8px 16px;
 }
-button:hover {
-  cursor: pointer;
+@media (max-width: 576px) {
+  .canvas-border {
+    height: 200px;
+  }
 }
-.box-heading button:hover {
-  background-color: #ebebf3;
+/* 
+
+.border {
+  width: 100%;
+  border-style: solid;
+  border-width: 1px 0 0 0px;
+  border-color: red;
+  position: relative;
+  top: -42px;
 }
+
+
+
+*/
 </style>

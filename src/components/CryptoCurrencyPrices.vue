@@ -5,7 +5,7 @@
 <script></script>
 
 <style scoped>
-.container {
+/* .container {
   margin-top: 49px;
   display: flex;
   justify-content: space-between;
@@ -23,5 +23,5 @@ button {
 button:hover {
   background-color: #ebebf3;
   cursor: pointer;
-}
+} */
 </style>

@@ -9,17 +9,20 @@
         />
       </button>
     </div>
-
-    <div class="cash">
-      <H1 id="currency">$</H1
-      ><H1 id="currency-value">{{ numberWithSpaces(this.CurrentBalance) }}</H1>
-    </div>
-    <div
-      class="diference-status"
-      :class="{ rise: change > 0, fall: change < 0 }"
-    >
-      <img :src="this.setGraphic(change)" alt="" />
-      <H2>{{ change }}% vs last month</H2>
+    <div>
+      <div class="cash">
+        <H1 id="currency">$</H1
+        ><H1 id="currency-value">{{
+          numberWithSpaces(this.CurrentBalance)
+        }}</H1>
+      </div>
+      <div
+        class="diference-status"
+        :class="{ rise: change > 0, fall: change < 0 }"
+      >
+        <img :src="this.setGraphic(change)" alt="" />
+        <H2>{{ change }}% vs last month</H2>
+      </div>
     </div>
 
     <div class="btns">
@@ -69,6 +72,10 @@ export default {
   background-color: #f7f7f9;
   border-radius: 16px;
   padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 .box-heading {
   display: flex;
@@ -80,38 +87,6 @@ export default {
   height: auto;
   width: auto;
   padding: 0;
-}
-.diference-status {
-  color: #9896a1;
-  display: flex;
-  padding-bottom: 72px;
-}
-.rise {
-  color: #2dc78f;
-}
-.fall {
-  color: #ea4d4d;
-}
-.cash {
-  margin: 40px 0 16px 0px;
-  padding: 0;
-}
-#currency {
-  color: #9896a1;
-}
-H1 {
-  margin: 0;
-  padding: 0;
-  font-weight: 300;
-  font-size: 56px;
-  display: inline-block;
-}
-
-H2 {
-  padding: 0;
-  margin: 0;
-  font-weight: 500;
-  font-size: 24px;
 }
 button {
   height: 48px;
@@ -126,22 +101,6 @@ button {
   width: auto;
   padding: 8px 16px;
 }
-
-button:hover {
-  cursor: pointer;
-}
-#quick-invest,
-#show-report {
-  border-radius: 4px;
-}
-#quick-invest {
-  border-style: none;
-  background-color: #7445fb;
-  color: #ffffff;
-}
-.diference-status H2 {
-  padding-left: 5px;
-}
 .btns {
   display: flex;
   flex-wrap: wrap;
@@ -153,13 +112,99 @@ button:hover {
   color: #7445fb;
   border-style: solid;
 }
-#show-report:hover {
-  background-color: #ebebf3;
+#quick-invest,
+#show-report {
+  border-radius: 4px;
 }
-
+button:hover {
+  cursor: pointer;
+}
+#show-report:hover,
 .box-heading button:hover {
   background-color: #ebebf3;
 }
+H1 {
+  font-weight: 300;
+  font-size: 56px;
+  display: inline-block;
+  margin: 40px 0 16px 0px;
+  padding: 0;
+}
+
+H2 {
+  padding: 0;
+  margin: 0;
+  font-weight: 500;
+  font-size: 24px;
+}
+#currency {
+  color: #9896a1;
+}
+.diference-status {
+  color: #9896a1;
+  display: flex;
+  padding-bottom: 72px;
+}
+.diference-status H2 {
+  padding-left: 5px;
+}
+#quick-invest {
+  border-style: none;
+  background-color: #7445fb;
+  color: #ffffff;
+}
+
+.rise {
+  color: #2dc78f;
+}
+.fall {
+  color: #ea4d4d;
+}
+@media (max-width: 576px) {
+  H1 {
+    font-weight: 300;
+    font-size: 28px;
+    display: inline-block;
+    margin: 40px 0 16px 0px;
+    padding: 0;
+  }
+
+  H2 {
+    padding: 0;
+    margin: 0;
+    font-weight: 500;
+    font-size: 22px;
+  }
+  .btns {
+    display: flex;
+    flex-wrap: wrap;
+
+    /* width: 100%; */
+    gap: 8px;
+  }
+
+  .box {
+    padding: 20px;
+  }
+}
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (max-width: 576px) {
   H1 {
     margin: 0;
@@ -179,5 +224,5 @@ button:hover {
   #show-report {
     flex-grow: 1;
   }
-}
+} */
 </style>

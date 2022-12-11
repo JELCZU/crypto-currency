@@ -1,23 +1,25 @@
 <template>
-  <div class="box">
-    <div>
-      <div class="box-heading">
-        <button
-          v-for="tab in tabs"
-          :key="tab"
-          @click="chagneTab(tab)"
-          v-bind:id="tab"
-        >
-          {{ tab }}
-        </button>
+  <div>
+    <div class="box">
+      <div>
+        <div class="box-heading">
+          <button
+            v-for="tab in tabs"
+            :key="tab"
+            @click="chagneTab(tab)"
+            v-bind:id="tab"
+          >
+            {{ tab }}
+          </button>
+        </div>
+        <component
+          :is="selected"
+          :cryptoCurrencyData="cryptoCurrencyData"
+          :isDataFetched="isDataFetched"
+        ></component>
       </div>
-      <component
-        :is="selected"
-        :cryptoCurrencyData="cryptoCurrencyData"
-        :isDataFetched="isDataFetched"
-      ></component>
+      <!-- {{ cryptoCurrencyData.data[""] }} -->
     </div>
-    <!-- {{ cryptoCurrencyData.data[""] }} -->
   </div>
 </template>
 
@@ -97,5 +99,35 @@ export default {
   font-weight: 600;
   border-width: 0 0 4px 0;
   padding-bottom: 11px;
+}
+@media (max-width: 576px) {
+  .box-heading {
+    flex-wrap: wrap;
+  }
+  H1 {
+    font-weight: 300;
+    font-size: 28px;
+    display: inline-block;
+    margin: 40px 0 16px 0px;
+    padding: 0;
+  }
+
+  H2 {
+    padding: 0;
+    margin: 0;
+    font-weight: 500;
+    font-size: 22px;
+  }
+  .btns {
+    display: flex;
+    flex-wrap: wrap;
+
+    /* width: 100%; */
+    gap: 8px;
+  }
+
+  .box {
+    padding: 20px;
+  }
 }
 </style>

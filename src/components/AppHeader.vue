@@ -24,9 +24,12 @@
 
 <style scoped>
 .container {
-  margin-top: 49px;
+  min-width: 100%;
+
   display: flex;
   justify-content: space-between;
+  padding: 49px 68px 32px 68px;
+  margin: 0;
 }
 .btns {
   display: flex;
@@ -55,5 +58,15 @@ button {
 button:hover {
   background-color: #ebebf3;
   cursor: pointer;
+}
+@media (max-width: 576px) {
+  #search {
+    width: 100%;
+  }
+  .container {
+    font-size: 14px;
+    padding: 10px 10px 10px 10px;
+    gap: 16px;
+  }
 }
 </style>

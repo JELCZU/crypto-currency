@@ -19,16 +19,13 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: SF Pro Display, Helvetica, Arial, sans-serif;
+* {
   box-sizing: border-box;
+  font-family: SF Pro Display, Helvetica, Arial, sans-serif;
 }
-.container {
-  margin: 0 68px;
-}
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
   .container {
     margin: 0 20px;
   }
-}
+} */
 </style>

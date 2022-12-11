@@ -1,10 +1,5 @@
 <template>
-  <div class="container">
-    <!-- <CryptoCurrencyElement
-      :cryptoCurrencyData="cryptoCurrencyData"
-      :isDataFetched="isDataFetched"
-    /> -->
-
+  <div class="tab-summary-box">
     <CryptoCurrencyElement
       :isDataFetched="isDataFetched"
       v-for="cryptoCurrency in cryptoCurrencyData.data"
@@ -30,11 +25,12 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.tab-summary-box {
   background-color: #f7f7f9;
   padding: 32px 0 0 0;
   margin: 0;
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 8px;
 }
