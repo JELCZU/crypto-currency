@@ -14,9 +14,12 @@
       <H1 id="currency">$</H1
       ><H1 id="currency-value">{{ numberWithSpaces(this.CurrentBalance) }}</H1>
     </div>
-    <div class="diference-status">
-      <img :src="this.setSymbol(change)" alt="" />
-      <H2 id="balance-change">{{ change }}% vs last month</H2>
+    <div
+      class="diference-status"
+      :class="{ rise: change > 0, fall: change < 0 }"
+    >
+      <img :src="this.setGraphic(change)" alt="" />
+      <H2>{{ change }}% vs last month</H2>
     </div>
 
     <div class="btns">
@@ -43,7 +46,7 @@ export default {
       return parts.join(".");
     },
 
-    setSymbol(change) {
+    setGraphic(change) {
       // eslint-disable-next-line global-require, import/no-unresolved
       let path = require("@/./assets/img/market-no-change-md.svg");
       if (change > 0) {
@@ -56,22 +59,8 @@ export default {
       }
       return path;
     },
-    setTextColor(change) {
-      document.getElementById("balance-change").classList.remove("profit");
-      document.getElementById("balance-change").classList.remove("lose");
-      if (change > 0) {
-        document.getElementById("balance-change").classList.remove("lose");
-        document.getElementById("balance-change").classList.add("profit");
-      }
-      if (change < 0) {
-        document.getElementById("balance-change").classList.remove("profit");
-        document.getElementById("balance-change").classList.add("lose");
-      }
-    },
   },
-  mounted() {
-    this.setTextColor(this.change);
-  },
+  mounted() {},
 };
 </script>
 
@@ -97,10 +86,10 @@ export default {
   display: flex;
   padding-bottom: 72px;
 }
-.profit {
+.rise {
   color: #2dc78f;
 }
-.lose {
+.fall {
   color: #ea4d4d;
 }
 .cash {

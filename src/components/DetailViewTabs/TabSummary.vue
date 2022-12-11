@@ -1,12 +1,16 @@
 <template>
   <div class="container">
-    <CryptoCurrencyElement />
-    <!-- <CryptoCurrencyElement /> -->
-    <!-- <CryptoCurrencyElement /> -->
     <!-- <CryptoCurrencyElement
-      v-for="CryptoCurrencyElement in CryptoCurrencyElements"
-      :key="id"
+      :cryptoCurrencyData="cryptoCurrencyData"
+      :isDataFetched="isDataFetched"
     /> -->
+
+    <CryptoCurrencyElement
+      :isDataFetched="isDataFetched"
+      v-for="cryptoCurrency in cryptoCurrencyData.data"
+      :key="cryptoCurrency.id"
+      :cryptoCurrency="cryptoCurrency"
+    />
   </div>
 </template>
 
@@ -14,6 +18,8 @@
 import CryptoCurrencyElement from "./CryptoCurrencyElement.vue";
 
 export default {
+  name: "TabSummary",
+  props: ["cryptoCurrencyData", "isDataFetched"],
   data() {
     return { CryptoCurrencyElement };
   },

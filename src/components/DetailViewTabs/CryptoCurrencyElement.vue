@@ -1,21 +1,54 @@
 <template>
-  <div class="li">
+  <div class="li" v-if="isDataFetched">
     <div class="currency-general">
-      <img />
+      <img :src="this.cryptoCurrency.logo" />
       <div>
-        <div class="description">abbreviation</div>
-        <div class="value">Name</div>
+        <div class="description">
+          {{ this.cryptoCurrency.symbol }}
+        </div>
+        <div class="value">
+          {{ this.cryptoCurrency.name }}
+        </div>
       </div>
     </div>
     <div class="currency-price">
-      <div class="description">abbreviation</div>
-      <div class="value">Name</div>
+      <div class="description">Price</div>
+      <div class="value">
+        ${{
+          new Intl.NumberFormat("en-IN").format(
+            (
+              Math.round(this.cryptoCurrency.quote.USD.price * 100) / 100
+            ).toFixed(2)
+          )
+        }}
+      </div>
     </div>
     <div class="currency-change">
       <div class="description">Change</div>
-      <div class="value">ChangeValue</div>
+      <div
+        class="value"
+        :class="{
+          rise: this.cryptoCurrency.quote.USD.percent_change_30d > 0,
+          fall: this.cryptoCurrency.quote.USD.percent_change_30d < 0,
+        }"
+      >
+        <div>
+          <div v-if="this.cryptoCurrency.quote.USD.percent_change_30d > 0">
+            +
+          </div>
+        </div>
+        <div>{{ this.cryptoCurrency.quote.USD.percent_change_30d }}%</div>
+        <img
+          :src="
+            this.setGraphic(this.cryptoCurrency.quote.USD.percent_change_30d)
+          "
+          alt=""
+        />
+      </div>
     </div>
-    <div class="currency-trend"><canvas id="myChart1"></canvas></div>
+    <div class="currency-trend">
+      <canvas id="myChart1"></canvas>
+    </div>
     <div class="currency-btns">
       <button id="sell">Sell</button><button id="buy">Buy</button>
     </div>
@@ -26,10 +59,14 @@
 import Chart from "chart.js/auto";
 
 export default {
-  name: "CurrentBalance",
+  name: "CryptoCurrencyElement",
+  props: ["cryptoCurrency", "isDataFetched"],
   data() {
     return {
-      change: 12.0,
+      change: 0,
+      color: "rgba(45, 199, 143, 1)",
+      colorBackground: "rgba(45, 199, 143, 0.04)",
+      // colorBackground: "red",
     };
   },
   methods: {
@@ -37,115 +74,100 @@ export default {
       const path = "../assets/img/market-growth-big.svg";
       return path;
     },
-    setSymbol(change) {
+    setSymbol() {},
+    setGraphic(change) {
       // eslint-disable-next-line global-require, import/no-unresolved
-      let path = require("@/./assets/img/market-no-change-md.svg");
+      let path = require("@/./assets/img/market-no-change-sm.svg");
       if (change > 0) {
         // eslint-disable-next-line global-require, import/no-unresolved
-        path = require("@/./assets/img/market-growth-md.svg");
+        path = require("@/./assets/img/market-growth-sm.svg");
       }
       if (change < 0) {
         // eslint-disable-next-line global-require, import/no-unresolved
-        path = require("@/./assets/img/market-fall-md.svg");
+        path = require("@/./assets/img/market-fall-sm.svg");
       }
       return path;
     },
-    setTextColor(change) {
-      document.getElementById("balance-change").classList.remove("profit");
-      document.getElementById("balance-change").classList.remove("lose");
-      if (change > 0) {
-        document.getElementById("balance-change").classList.remove("lose");
-        document.getElementById("balance-change").classList.add("profit");
-      }
-      if (change < 0) {
-        document.getElementById("balance-change").classList.remove("profit");
-        document.getElementById("balance-change").classList.add("lose");
-      }
+    renderChart() {
+      const ctx = document.getElementById("myChart1");
+      const gradient = ctx.getContext("2d").createLinearGradient(0, 0, 0, 200);
+      gradient.addColorStop(0, this.colorBackground);
+      gradient.addColorStop(1, "rgba(254,254,254,0)");
+      const summaryChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+          datasets: [
+            {
+              label: "This month",
+
+              data: [43, 19, 3, 5, 23, 3],
+              backgroundColor: gradient,
+              borderColor: this.color,
+              fill: true,
+              tension: 0.4,
+              borderWidth: 2,
+            },
+          ],
+        },
+
+        options: {
+          layout: {
+            padding: {
+              left: false,
+              top: -30,
+              bottom: false,
+            },
+          },
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              display: false,
+              beginAtZero: true,
+              ticks: { color: "rgba(0, 0, 0, 0.48)", beginAtZero: true },
+              grid: {
+                drawTicks: false,
+
+                // tickBorderDashOffset: 2,
+              },
+              border: {
+                display: false,
+                dash: [1, 4],
+              },
+            },
+            x: {
+              display: false,
+            },
+          },
+          elements: {
+            point: {
+              radius: 0,
+            },
+          },
+          plugins: {
+            legend: {
+              display: false,
+              position: "bottom",
+              align: "start",
+
+              labels: {
+                usePointStyle: true,
+                pointStyle: "circle",
+                padding: 44,
+                boxHeight: 4,
+                color: "#9896A1",
+                font: { family: "SF Pro Display", size: 12, weight: 400 },
+              },
+            },
+          },
+        },
+      });
+
+      // eslint-disable-next-line no-unused-expressions
+      summaryChart;
     },
   },
-  mounted() {
-    const ctx = document.getElementById("myChart1");
-    const gradientRed = ctx.getContext("2d").createLinearGradient(0, 0, 0, 200);
-    gradientRed.addColorStop(0, "rgb(116, 69, 251,0.16)");
-    gradientRed.addColorStop(1, "rgba(254,254,254,0)");
-    const gradientGreen = ctx
-      .getContext("2d")
-      .createLinearGradient(0, 0, 0, 200);
-    gradientGreen.addColorStop(0, "rgb(116, 69, 251,0.16)");
-    gradientGreen.addColorStop(1, "rgba(254,254,254,0)");
-    const summaryChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [
-          {
-            label: "This month",
-
-            data: [43, 19, 3, 5, 23, 3],
-            backgroundColor: gradientGreen,
-            borderColor: "#7445FB",
-            fill: true,
-            tension: 0.4,
-            borderWidth: 2,
-          },
-        ],
-      },
-
-      options: {
-        layout: {
-          padding: {
-            left: false,
-            top: -30,
-            bottom: false,
-          },
-        },
-        maintainAspectRatio: false,
-        scales: {
-          y: {
-            display: false,
-            beginAtZero: true,
-            ticks: { color: "rgba(0, 0, 0, 0.48)", beginAtZero: true },
-            grid: {
-              drawTicks: false,
-
-              // tickBorderDashOffset: 2,
-            },
-            border: {
-              display: false,
-              dash: [1, 4],
-            },
-          },
-          x: {
-            display: false,
-          },
-        },
-        elements: {
-          point: {
-            radius: 0,
-          },
-        },
-        plugins: {
-          legend: {
-            display: false,
-            position: "bottom",
-            align: "start",
-
-            labels: {
-              usePointStyle: true,
-              pointStyle: "circle",
-              padding: 44,
-              boxHeight: 4,
-              color: "#9896A1",
-              font: { family: "SF Pro Display", size: 12, weight: 400 },
-            },
-          },
-        },
-      },
-    });
-
-    // eslint-disable-next-line no-unused-expressions
-    summaryChart;
-  },
+  mounted() {},
 };
 </script>
 
@@ -162,11 +184,27 @@ export default {
   align-items: center;
   font-size: 14px;
 }
+.currency-general img {
+  max-height: 64px;
+  border-radius: 48px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ebebf3;
+  margin-right: 16px;
+  padding: 8px;
+}
 .description {
   color: #9896a1;
 }
 .currency-general {
   display: flex;
+  align-items: center;
+  width: 20%;
+}
+.currency-general,
+.currency-price,
+.currency-change {
+  width: 20%;
 }
 canvas {
   width: 150px;
@@ -175,6 +213,15 @@ canvas {
 .currency-btns {
   display: flex;
   gap: 8px;
+}
+.description {
+  font-size: 14px;
+  font-weight: 600;
+}
+.value {
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
 }
 .currency-btns button {
   height: 40px;
@@ -197,5 +244,15 @@ canvas {
 }
 #sell:hover {
   background-color: #ebebf3;
+}
+.currency-change .value {
+  display: flex;
+  align-items: center;
+}
+.rise {
+  color: #2dc78f;
+}
+.fall {
+  color: #ea4d4d;
 }
 </style>

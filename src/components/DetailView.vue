@@ -11,8 +11,13 @@
           {{ tab }}
         </button>
       </div>
-      <component :is="selected"></component>
+      <component
+        :is="selected"
+        :cryptoCurrencyData="cryptoCurrencyData"
+        :isDataFetched="isDataFetched"
+      ></component>
     </div>
+    <!-- {{ cryptoCurrencyData.data[""] }} -->
   </div>
 </template>
 
@@ -24,9 +29,11 @@ import Reporting from "./DetailViewTabs/TabReporting.vue";
 import Analysis from "./DetailViewTabs/TabAnalysis.vue";
 
 export default {
+  props: ["cryptoCurrencyData", "isDataFetched"],
   data() {
     return {
       tabs: ["Summary", "Table", "Charts", "Reporting", "Analysis"],
+
       selected: "Summary",
     };
   },
