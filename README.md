@@ -21,7 +21,7 @@ After download repository you can run project by type:
 ## About app
 App is developed using  Vue framework and chart.js library. 
 
-![How to use](https://github.com/JELCZU/crypto-currency/blob/master/img/The%20app%20how%2to.PNG) 
+![How to use](https://github.com/JELCZU/crypto-currency/blob/master/img/The%20app%20how%20to.PNG) 
 app contain 3 main sections:
 1. Current Balance where you can check your crypto wallet worth, and watch changes.
 2. Summary view where you can check chart with this and last month wallet worth.
