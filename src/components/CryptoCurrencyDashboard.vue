@@ -108,7 +108,7 @@ export default {
     height: 100px;
   }
 }
-@media (max-height: 576px) {
+@media (max-height: 476px) {
   .current-balance {
     order: 1;
   }
