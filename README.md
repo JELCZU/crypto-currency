@@ -1,7 +1,9 @@
 # Crypto currency
 ![The app](https://github.com/JELCZU/crypto-currency/blob/master/img/The%20app.PNG) 
-Crypto currency is app developed by using Vue framework. This app let you check your crypto wallet and track  your crypto wallet balance changes. In this app you can also check price of crypto currency and buy or sell it
+Crypto currency is app developed by using Vue framework. This app let you check your crypto wallet and track  your crypto wallet balance changes. In this app you can also check price of crypto currency and buy or sell it.
  
+[Demo](https://jelczu.github.io/crypto-currency/) 
+
 ## Table of contents
 * [Instalation](#Instalation)
 * [About app](#About-app)
